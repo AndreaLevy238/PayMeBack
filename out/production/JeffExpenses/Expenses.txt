@@ -1,1 +1,2 @@
-8 6 2015 5
+Date	Amount Borrowed
+08/06/2015  -5.00

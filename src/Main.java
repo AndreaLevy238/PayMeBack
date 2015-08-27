@@ -6,15 +6,17 @@ public class Main
 {
     public static LinkedList<Payment> readFile(Scanner reader)
     {
+        String line = reader.nextLine();
         LinkedList<Payment> book= new LinkedList<>();
         while(reader.hasNextLine()) {
-            String line = reader.nextLine();
-            String[] data = line.split(" ");
+            line = reader.nextLine();
+            String[] data = line.split(",");
             try {
-                int month = Integer.parseInt(data[0]);
-                int day = Integer.parseInt(data[1]);
-                int year = Integer.parseInt(data[2]);
-                double amount = Double.parseDouble(data[3]);
+                String[] date = data[0].split("/");
+                int month = Integer.parseInt(date[0]);
+                int day = Integer.parseInt(date[1]);
+                int year = Integer.parseInt(date[2]);
+                double amount = Double.parseDouble(data[1]);
                 Payment payment = new Payment(new Date(month, day, year), amount);
                 book.add(payment);
 
@@ -27,11 +29,12 @@ public class Main
     }
     public static void outText(double sum)
     {
-        if (sum > 0)
+        if (sum < 0)
         {
-            System.out.println("You lent out "+ Double.toString(sum)+ " dollars. You need to get your money back.");
+            Double absSum = 0 - sum;
+            System.out.println("You lent out "+ Double.toString(absSum)+ " dollars. You need to get your money back.");
         }
-        else if (sum < 0)
+        else if (sum > 0)
         {
             System.out.println("You owe" + Double.toString(sum) + "dollars");
         }
@@ -46,7 +49,7 @@ public class Main
 
         try
         {
-            Scanner reader = new Scanner(new File("src/Expenses.txt"));
+            Scanner reader = new Scanner(new File("src/Expenses.csv"));
             Double sum = 0.0;
             LinkedList<Payment> book = readFile(reader);
 
